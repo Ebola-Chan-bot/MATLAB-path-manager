@@ -1,0 +1,181 @@
+<deployment-project plugin="plugin.toolbox" plugin-version="1.0">
+  <configuration file="C:\Users\vhtmf\Documents\MATLAB\MATLAB路径管理\打包为工具箱.prj" location="C:\Users\vhtmf\Documents\MATLAB\MATLAB路径管理" name="打包为工具箱" target="target.toolbox" target-name="打包为工具箱">
+    <param.appname>MATLAB 搜索 路径 管理 系统 Search Path Manager</param.appname>
+    <param.authnamewatermark>埃博拉酱</param.authnamewatermark>
+    <param.email>vhtmfu@outlook.com</param.email>
+    <param.company />
+    <param.summary>本工具箱面对的是多用户计算机的管理员，帮助管理员配置MATLAB路径，以便多个用户可以互不干扰地使用同一份MATLAB安装。</param.summary>
+    <param.description>适用症状
+MATLAB垃圾的多用户搜索路径管理机制已经被广大公用计算机管理员们诟病已久，并且至今没有表露出任何打算改进的意图，因此本工具箱前来解决此问题！如果你管理的公用计算机上安装了唯一一份MATLAB并且共享给多个用户使用，你可能会遇到以下症状：
+
+出现大量红字报错，包括搜索路径找不到、弹出一大堆错误提示对话框提示找不到函数等等。报错后MATLAB大量功能无法正常使用。这是因为路径定义函数pathdef.m为只读。
+
+MATLAB能够正常使用，但是出现大量橙字警告，提示一大堆搜索路径找不到或无法打开。这是因为某用户设置了他的私有路径，其他用户无法访问。
+
+某些 File Exchange 上下载的第三方工具箱，希望在用户之间共享，但却只能为每个用户重新安装一次，非常麻烦。这是因为第三方工具箱默认安装在用户私有目录下，其他用户无法访问。
+
+病因和疗法
+根本原因是MATLAB的搜索路径管理系统设计之初根本没有考虑到多用户之间的共享、隔离功能。多用户之间常常需要共享某些内容，而隔离另一些内容。Windows操作系统对此已经做了非常好的明确规范，尽管很多应用开发者并不遵守：
+
+%ProgramFiles%，存放x64应用的只读文件。这些文件应该仅在安装过程中可写，日常使用中应当保持只读。通常在这里存放应用的可执行文件、多媒体素材等日常使用过程中不需要修改的文件。
+%ProgramFiles(x86)%，存放x86应用的只读文件。
+%ProgramData%，存放一般用户只读、管理员可写的数据。这里通常存放的是一些全局配置文件，管理员有权修改它们，希望被一般用户共享，但不希望一般用户随意修改它们。
+%PUBLIC%，存放所有用户可写的数据。
+%APPDATA%，每个用户专有的应用数据。这些数据仅由每个用户自己可写（除了管理员可读写所有用户数据），对这些数据的修改不会影响其它用户。
+我们希望的搜索路径，应当由3部分组成：
+
+内置和工具箱函数路径，这些路径应当仅在安装时允许修改，因此应放在%ProgramFiles%目录下
+用户之间共享的第三方函数路径，这些路径应当只允许管理员修改，一般用户只能读取，因此应放在%ProgramData%目录下
+用户自己使用的代码路径，这些路径应当允许用户自己修改，但是不应影响到其他用户，因此应放在%APPDATA%下。但是因为MATLAB恰好支持更方便的%MATLABPATH%环境变量，所以使用该变量实现用户私有路径。
+而MATLAB是怎么做的呢？它彻底无视了上述规范，将上述三种路径通通存放在%ProgramFiles%的pathdef.m下。因为%ProgramFiles%被认为是只有在安装时才允许修改的，因此一般用户无法修改它，也就无法设置自己需要的路径。如果管理员修改了权限，允许一般用户修改它，那么任何一个用户的改动都会影响到其他用户，导致其他用户出现无法访问别人的私有目录的问题。
+
+为了纠正这个问题，本工具箱需要管理员权限，对内置savepath和matlabrc函数行为进行更改，避免修改全局的pathdef。优化后，一般用户对搜索路径的修改只会影响自己，对其他人无影响；而管理员则可以明确指定对全局路径的修改，让所有用户共享某些路径。
+
+API目录
+所有函数均在静态类@PathManager下，使用前需导入：
+
+import PathManager.*
+AddSharedPaths 添加共享搜索路径
+
+InstallSharedAddon 安装共享附加功能
+
+ListSharedAddons 列出当前所有共享的附加功能
+
+RemoveSharedPaths 移除共享搜索路径
+
+Setup 安装搜索路径管理系统。需要提权。
+
+SharedPaths 显示/设置共享搜索路径。
+
+Uninstall 卸载搜索路径管理系统。需要提权
+
+UninstallSharedAddon 卸载指定名称/位置的共享附加功能。</param.description>
+    <param.screenshot>${PROJECT_ROOT}\工具箱图标.png</param.screenshot>
+    <param.version>1.0.0</param.version>
+    <param.output>${PROJECT_ROOT}\MATLAB 搜索 路径 管理 系统 Search Path Manager.mltbx</param.output>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.guid>4e53100e-f5a9-43d6-9b65-3ddcf6bd4a31</param.guid>
+    <param.exclude.filters>% List files contained in your toolbox folder that you would like to exclude
+% from packaging.  Excludes should be listed relative to the toolbox folder.
+% Some examples of how to specify excludes are provided below:
+%
+% A single file in the toolbox folder:
+% .svn
+%
+% A single file in a subfolder of the toolbox folder:
+% example/.svn
+%
+% All files in a subfolder of the toolbox folder:
+% example/*
+%
+% All files of a certain name in all subfolders of the toolbox folder:
+% **/.svn
+%
+% All files matching a pattern in all subfolders of the toolbox folder:
+% **/*.bak
+%
+.git
+配置路径管理系统
+.vs
+packages
+.gitattributes
+工具箱图标.png
+README.md
+.gitignore
+配置路径管理系统.sln</param.exclude.filters>
+    <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
+    <param.examples />
+    <param.demosxml />
+    <param.apps />
+    <param.registered.apps />
+    <param.docs />
+    <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
+    <param.matlabpath.excludes />
+    <param.javaclasspath.excludes />
+    <param.exported.on.package>false</param.exported.on.package>
+    <param.required.addons />
+    <param.matlab.project.id />
+    <param.matlab.project.name />
+    <param.release.start>R2021b</param.release.start>
+    <param.release.end>latest</param.release.end>
+    <param.release.current.only>false</param.release.current.only>
+    <param.compatiblity.windows>true</param.compatiblity.windows>
+    <param.compatiblity.macos>false</param.compatiblity.macos>
+    <param.compatiblity.linux>false</param.compatiblity.linux>
+    <param.compatiblity.matlabonline>false</param.compatiblity.matlabonline>
+    <param.installation.map />
+    <param.additional.sw.names />
+    <param.additional.sw.licenses />
+    <param.additional.sw.win.url />
+    <param.additional.sw.mac.url />
+    <param.additional.sw.linux.url />
+    <unset>
+      <param.company />
+      <param.output />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.exclude.pcodedmfiles />
+      <param.examples />
+      <param.demosxml />
+      <param.apps />
+      <param.registered.apps />
+      <param.docs />
+      <param.matlabpath.excludes />
+      <param.javaclasspath.excludes />
+      <param.exported.on.package />
+      <param.required.addons />
+      <param.matlab.project.id />
+      <param.matlab.project.name />
+      <param.release.current.only />
+      <param.compatiblity.windows />
+      <param.installation.map />
+      <param.additional.sw.names />
+      <param.additional.sw.licenses />
+      <param.additional.sw.win.url />
+      <param.additional.sw.mac.url />
+      <param.additional.sw.linux.url />
+    </unset>
+    <fileset.rootdir>
+      <file>${PROJECT_ROOT}</file>
+    </fileset.rootdir>
+    <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\@PathManager</file>
+      <file>${PROJECT_ROOT}\doc</file>
+      <file>${PROJECT_ROOT}\resources</file>
+    </fileset.rootfiles>
+    <fileset.depfun.included />
+    <fileset.depfun.excluded>
+      <file>${MATLAB_ROOT}\toolbox\local\restoredefaultpath.m</file>
+      <file>${MATLAB_ROOT}\toolbox\local\userpath.m</file>
+    </fileset.depfun.excluded>
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}" name="MATLAB 搜索 路径 管理 系统 Search Path Manager.mltbx" optional="false">C:\Users\vhtmf\Documents\MATLAB\MATLAB路径管理\MATLAB 搜索 路径 管理 系统 Search Path Manager.mltbx</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2022a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

@@ -1,0 +1,4 @@
+# List of untracked files to ignore
+/.vs
+/packages
+/配置路径管理系统/obj

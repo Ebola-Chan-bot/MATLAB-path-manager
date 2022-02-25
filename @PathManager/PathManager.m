@@ -15,10 +15,24 @@ classdef(Abstract,Sealed)PathManager
 			system(sprintf('"%s" %s "%s"',PathManager.Executable,'安装',matlabroot),'-runAsAdmin');
 			clear savepath
 		end
-		function Uninstall
+		function Uninstall(UninstallSharedAddons)
 			% 卸载搜索路径管理系统。需要提权
-			% 语法: PathManager.Uninstall
+			% 语法：PathManager.Uninstall(UninstallSharedAddons)
+			% 输入参数：UninstallSharedAddons(1,1)logical=false，指示是否要删除已安装的共享附加功能
 			% 警告：卸载操作将删除之前设置的所有用户私有搜索路径和共享搜索路径，将MATLAB搜索路径出厂化（已安装的附加功能不受影响）。此操作将影响所有用户。
+			arguments
+				UninstallSharedAddons=false
+			end
+			if UninstallSharedAddons
+				SharedAddons=PathManager.ListSharedAddons;
+				[~,Names]=fileparts(SharedAddons);
+				IsToolbox=ismember(Names,matlab.addons.installedAddons().Name);
+				ToUninstall=Names(IsToolbox);
+				for T=1:numel(ToUninstall)
+					matlab.addons.uninstall(ToUninstall(T));
+				end
+				MATLAB.General.Delete(SharedAddons(~IsToolbox));
+			end
 			system(sprintf('"%s" %s "%s"',PathManager.Executable,'卸载',matlabroot),'-runAsAdmin');
 			clear savepath
 		end

@@ -40,11 +40,14 @@ Module Program
 						注册表键.DeleteValue("MATLABPATH", False)
 					End If
 				Next
-				Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
-				File.Delete(Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "MATLAB\共享路径.txt"))
+				Dim 子路径 = Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "MATLAB\共享路径.txt")
+				If File.Exists(子路径) Then
+					'虽然文件不存在不会出错，但目录不存在是会出错的，所以还是要检查存在性
+					File.Delete(子路径)
+				End If
 				Dim MATLAB根目录 = args(1)
 				File.Copy(Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "..\部署\原版savepath.m"), Combine(MATLAB根目录, "toolbox\matlab\general\savepath.m"), True)
-				Dim 子路径 = Combine(MATLAB根目录, "toolbox\local\matlabrc.m")
+				子路径 = Combine(MATLAB根目录, "toolbox\local\matlabrc.m")
 				File.WriteAllText(子路径, File.ReadAllText(子路径).Replace(vbCrLf & "PathManagerRC;", "").Replace(vbLf & "PathManagerRC;", ""))
 				子路径 = Combine(MATLAB根目录, "toolbox\local\private")
 				If Directory.Exists(子路径) Then

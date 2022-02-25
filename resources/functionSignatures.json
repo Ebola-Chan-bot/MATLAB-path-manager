@@ -1,51 +1,116 @@
 {
-    "PathManager.SharedPaths":{
-        "inputs":[
+    "PathManager.AddSharedPaths": {
+        "inputs": [
             {
-                "name":"New",
-                "kind":"ordered",
-                "type":[["string"],["char","row"],["cell"]],
-                "purpose":"要设置的新路径"
+                "name": "SP",
+                "kind": "required",
+                "type": [
+                    [
+                        "string"
+                    ],
+                    [
+                        "char",
+                        "row"
+                    ],
+                    [
+                        "cell"
+                    ]
+                ],
+                "purpose": "要添加的搜索路径"
             }
         ]
     },
-    "PathManager.AddSharedPaths":{
-        "inputs":[
+    "PathManager.InstallSharedAddon": {
+        "inputs": [
             {
-                "name":"SP",
-                "kind":"required",
-                "type":[["string"],["char","row"],["cell"]],
-                "purpose":"要添加的搜索路径"
+                "name": "AddonPath",
+                "kind": "required",
+                "type": [
+                    [
+                        "string",
+                        "scalar"
+                    ],
+                    [
+                        "char",
+                        "row"
+                    ]
+                ],
+                "purpose": "要安装的附加功能路径"
             }
         ]
     },
-    "PathManager.RemoveSharedPaths":{
-        "inputs":[
+    "PathManager.RemoveSharedPaths": {
+        "inputs": [
             {
-                "name":"SP",
-                "kind":"required",
-                "type":[["string"],["char","row"],["cell"]],
-                "purpose":"要移除的搜索路径"
+                "name": "SP",
+                "kind": "required",
+                "type": [
+                    [
+                        "string"
+                    ],
+                    [
+                        "char",
+                        "row"
+                    ],
+                    [
+                        "cell"
+                    ]
+                ],
+                "purpose": "要移除的搜索路径"
             }
         ]
     },
-    "PathManager.InstallSharedAddon":{
-        "inputs":[
+    "PathManager.SharedPaths": {
+        "inputs": [
             {
-                "name":"AddonPath",
-                "kind":"required",
-                "type":[["string","scalar"],["char","row"]],
-                "purpose":"要安装的附加功能路径"
+                "name": "New",
+                "kind": "ordered",
+                "type": [
+                    [
+                        "string"
+                    ],
+                    [
+                        "char",
+                        "row"
+                    ],
+                    [
+                        "cell"
+                    ]
+                ],
+                "purpose": "要设置的新路径"
             }
         ]
     },
-    "PathManager.UninstallSharedAddon":{
-        "inputs":[
+    "PathManager.Uninstall": {
+        "inputs": [
             {
-                "name":"Addon",
-                "kind":"required",
-                "type":[["string","scalar"],["char","row"]],
-                "purpose":"要卸载的附加功能的名称或安装位置"
+                "name": "UninstallSharedAddons",
+                "kind": "ordered",
+                "type": [
+                    "logical",
+                    "scalar"
+                ],
+                "purpose": "是否要删除已安装的共享附加功能",
+                "default": false
+            }
+        ]
+    },
+    "PathManager.UninstallSharedAddon": {
+        "inputs": [
+            {
+                "name": "Addon",
+                "kind": "required",
+                "type": [
+                    [
+                        "string",
+                        "scalar"
+                    ],
+                    [
+                        "char",
+                        "row"
+                    ]
+                ],
+                "purpose": "要卸载的附加功能的名称或安装位置"
             }
         ]
     }

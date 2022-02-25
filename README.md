@@ -118,7 +118,9 @@ Old，当前共享搜索路径。如果设置了新的，将返回新路径。
 # Uninstall
 卸载搜索路径管理系统。需要提权
 
-语法: PathManager.Uninstall
+语法：PathManager.Uninstall(UninstallSharedAddons)
+
+输入参数：UninstallSharedAddons(1,1)logical=false，指示是否要删除已安装的共享附加功能
 
 警告：卸载操作将删除之前设置的所有用户私有搜索路径和共享搜索路径，将MATLAB搜索路径出厂化（已安装的附加功能不受影响）。此操作将影响所有用户。
 # UninstallSharedAddon

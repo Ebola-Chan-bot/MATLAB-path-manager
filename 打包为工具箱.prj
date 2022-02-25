@@ -5,7 +5,9 @@
     <param.email>vhtmfu@outlook.com</param.email>
     <param.company />
     <param.summary>本工具箱面对的是多用户计算机的管理员，帮助管理员配置MATLAB路径，以便多个用户可以互不干扰地使用同一份MATLAB安装。</param.summary>
-    <param.description>适用症状
+    <param.description>本工具箱依赖 .Net 6.0 桌面运行时，首次安装时可能会报错提示需要安装该运行时。
+
+适用症状
 MATLAB垃圾的多用户搜索路径管理机制已经被广大公用计算机管理员们诟病已久，并且至今没有表露出任何打算改进的意图，因此本工具箱前来解决此问题！如果你管理的公用计算机上安装了唯一一份MATLAB并且共享给多个用户使用，你可能会遇到以下症状：
 
 出现大量红字报错，包括搜索路径找不到、弹出一大堆错误提示对话框提示找不到函数等等。报错后MATLAB大量功能无法正常使用。这是因为路径定义函数pathdef.m为只读。
@@ -96,7 +98,11 @@ README.md
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
     <param.exported.on.package>false</param.exported.on.package>
-    <param.required.addons />
+    <param.required.addons>
+      <requiredaddons>
+        <requiredAddOn earliest="7.0.2" fromRepository="true" id="55b2e8d7-e4f3-4a7d-b01d-758acb6984a2" include="true" latest="latest">埃博拉酱 的 MATLAB 扩展 Extension</requiredAddOn>
+      </requiredaddons>
+    </param.required.addons>
     <param.matlab.project.id />
     <param.matlab.project.name />
     <param.release.start>R2021b</param.release.start>
@@ -128,7 +134,6 @@ README.md
       <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
       <param.exported.on.package />
-      <param.required.addons />
       <param.matlab.project.id />
       <param.matlab.project.name />
       <param.release.current.only />
@@ -159,7 +164,7 @@ README.md
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2022a</root>
+      <root>C:\Program Files\MATLAB\R2021b</root>
       <toolboxes />
     </matlab>
     <platform>

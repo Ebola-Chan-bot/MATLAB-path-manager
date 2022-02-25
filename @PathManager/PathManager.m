@@ -10,11 +10,12 @@ classdef(Abstract,Sealed)PathManager
 			% 安装搜索路径管理系统。需要提权。依赖 .Net 6.0 桌面运行时，若未安装，首次启动时可能出错，提示需要安装。
 			% 语法：PathManager.Setup
 			% 警告：安装操作将调用restoredefaultpath，将MATLAB搜索路径出厂化（已安装的附加功能不受影响），所有用户自定义搜索路径都会被删除。此操作将影响所有用户。
+			CurrentPaths=path;
 			restoredefaultpath;
 			MatlabSavepath;
 			system(sprintf('"%s" %s "%s"',PathManager.Executable,'安装',matlabroot),'-runAsAdmin');
 			clear savepath
-			addpath(fileparts(fileparts(mfilename("fullpath"))));
+			path(CurrentPaths);
 		end
 		function Uninstall(UninstallSharedAddons)
 			% 卸载搜索路径管理系统。需要提权
@@ -152,6 +153,7 @@ classdef(Abstract,Sealed)PathManager
 		end
 		function V=Version
 			V.Me='1.0.1';
+			V.MatlabExtension=MATLAB.Version;
 			V.MATLAB='R2022a';
 		end
 	end

@@ -99,9 +99,7 @@ README.md
     <param.javaclasspath.excludes />
     <param.exported.on.package>false</param.exported.on.package>
     <param.required.addons>
-      <requiredaddons>
-        <requiredAddOn earliest="7.0.2" fromRepository="true" id="55b2e8d7-e4f3-4a7d-b01d-758acb6984a2" include="true" latest="latest">埃博拉酱 的 MATLAB 扩展 Extension</requiredAddOn>
-      </requiredaddons>
+      <requiredaddons />
     </param.required.addons>
     <param.matlab.project.id />
     <param.matlab.project.name />

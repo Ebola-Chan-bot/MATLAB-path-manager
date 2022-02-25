@@ -51,7 +51,7 @@ Uninstall 卸载搜索路径管理系统。需要提权
 
 UninstallSharedAddon 卸载指定名称/位置的共享附加功能。</param.description>
     <param.screenshot>${PROJECT_ROOT}\工具箱图标.png</param.screenshot>
-    <param.version>1.0.0</param.version>
+    <param.version>1.0.1</param.version>
     <param.output>${PROJECT_ROOT}\MATLAB 搜索 路径 管理 系统 Search Path Manager.mltbx</param.output>
     <param.products.name />
     <param.products.id />

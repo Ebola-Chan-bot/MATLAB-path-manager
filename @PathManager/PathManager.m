@@ -152,7 +152,7 @@ classdef(Abstract,Sealed)PathManager
 			end
 		end
 		function V=Version
-			V.Me='1.0.1';
+			V.Me='1.0.2';
 			V.MatlabExtension=MATLAB.Version;
 			V.MATLAB='R2022a';
 		end

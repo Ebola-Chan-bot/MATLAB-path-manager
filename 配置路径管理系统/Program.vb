@@ -9,12 +9,10 @@ Module Program
 		Select Case args(0)
 			Case "安装"
 				Dim MATLAB根目录 = args(1)
-				Dim 字符串 As String = Combine(MATLAB根目录, "toolbox\local\private")
-				Directory.CreateDirectory(字符串)
 				Dim 部署目录 = Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "..\部署")
-				File.Copy(Combine(部署目录, "PathManagerRC.m"), Combine(字符串, "PathManagerRC.m"), True)
+				File.Copy(Combine(部署目录, "PathManagerRC.m"), Combine(MATLAB根目录, "toolbox\local\PathManagerRC.m"), True)
 				Dim matlabrc = New FileStream(Combine(MATLAB根目录, "toolbox\local\matlabrc.m"), FileMode.Open)
-				字符串 = New StreamReader(matlabrc).ReadToEnd
+				Dim 字符串 = New StreamReader(matlabrc).ReadToEnd
 				If Not Text.RegularExpressions.Regex.IsMatch(字符串, "^PathManagerRC;$",Text.RegularExpressions.RegexOptions.Multiline ) Then
 					Dim 写出字符串 As New Text.StringBuilder
 					If Not {vbLf, vbCrLf}.Contains(字符串.Last) Then
@@ -49,14 +47,7 @@ Module Program
 				File.Copy(Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "..\部署\原版savepath.m"), Combine(MATLAB根目录, "toolbox\matlab\general\savepath.m"), True)
 				子路径 = Combine(MATLAB根目录, "toolbox\local\matlabrc.m")
 				File.WriteAllText(子路径, File.ReadAllText(子路径).Replace(vbCrLf & "PathManagerRC;", "").Replace(vbLf & "PathManagerRC;", ""))
-				子路径 = Combine(MATLAB根目录, "toolbox\local\private")
-				If Directory.Exists(子路径) Then
-					If Directory.EnumerateFileSystemEntries(子路径).Count > 1 Then
-						File.Delete(Combine(子路径, "PathManagerRC.m"))
-					Else
-						Directory.Delete(子路径, True)
-					End If
-				End If
+				File.Delete(Combine(MATLAB根目录, "toolbox\local\PathManagerRC.m"))
 		End Select
 	End Sub
 End Module

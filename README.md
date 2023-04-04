@@ -1,4 +1,5 @@
 此工具已合并到[埃博拉酱的MATLAB扩展](https://github.com/Silver-Fang/MATLAB-Extension)中，本存储库已停止维护
+
 如果你是本机的唯一MATLAB用户，你应该不需要本工具箱。本工具箱面对的是多用户计算机的管理员，帮助管理员配置MATLAB路径，以便多个用户可以互不干扰地使用同一份MATLAB安装。
 
 本工具箱依赖 [.Net 6.0 桌面运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/runtime-desktop-6.0.2-windows-x64-installer)，首次安装时可能会报错提示需要安装该运行时。
